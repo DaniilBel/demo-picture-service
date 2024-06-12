@@ -18,7 +18,7 @@ public class AuthorController {
     private final AuthorRepository authorRepository;
     private final PictureRepository pictureRepository;
 
-    private static final Logger logger = Logger.getLogger(AuthorController.class.getName());
+//    private static final Logger logger = Logger.getLogger(AuthorController.class.getName());
 
     @Autowired
     public AuthorController(AuthorRepository authorRepository, PictureRepository pictureRepository) {
@@ -36,23 +36,10 @@ public class AuthorController {
         return authorRepository.findById(id);
     }
 
-//    @MutationMapping
-//    Picture addPicture(@Argument PictureInput picture) {
-//        logger.info(String.valueOf(picture.authorId()));
-//        Author author = authorRepository.findById(picture.authorId()).orElseThrow(() -> new IllegalArgumentException("Author not found"));
-//        Picture p = new Picture(picture.title(), picture.publisher(), author);
-//
-//        return pictureRepository.save(p);
-//    }
-
     @MutationMapping
     Picture addPicture(@Argument String title, @Argument Long size, @Argument String url, @Argument Long authorId) {
         Author author = authorRepository.findById(authorId).orElseThrow(() -> new IllegalArgumentException("Author not found"));
         Picture p = new Picture(title, size, url, author);
-//        p.setTitle(title);
-//        p.setSize(size);
-//        p.setUrl(url);
-//        p.setAuthor(new Author(authorId));
 
         return pictureRepository.save(p);
     }
