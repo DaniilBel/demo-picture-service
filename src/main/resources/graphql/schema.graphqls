@@ -1,0 +1,22 @@
+type Query {
+    authors: [Author]
+    authorById(id: ID!): Author
+}
+
+type Mutation {
+    addAuthor(name: String!): Author
+    addPicture(title: String!, size: Int, url: String!, authorId: ID!): Picture!
+}
+
+type Author {
+    id: ID!
+    name: String!
+    pictures: [Picture]
+}
+
+type Picture {
+    id: ID!
+    title: String!
+    size: Int
+    url: String!
+}

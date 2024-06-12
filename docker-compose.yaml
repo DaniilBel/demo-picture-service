@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  client-backend:
+    image: "daniilbel/pic-backend:1.0.0"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_DATABASE_URL=jdbc:postgresql://postgres:5432/pic_db
+
+  postgres:
+    image: "postgres"
+    environment:
+      POSTGRES_DB: "pic_db"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "1234"
+      PGDATA: "/var/lib/postgresql/data/db-data"
+    ports:
+      - "5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  pgadmin:
+    image: "dpage/pgadmin4"
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "d.b@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+      PGADMIN_LISTEN_PORT: "5050"
+    ports:
+      - "5050:5050"
+    volumes:
+      - "pgadmin-data:/var/lib/pgadmin"
+
+volumes:
+  db-data:
+  pgadmin-data:
