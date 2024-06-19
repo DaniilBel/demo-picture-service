@@ -1,7 +1,7 @@
 version: '3.8'
 services:
 #  client-backend:
-#    image: "daniilbel/pic-backend:1.0.0"
+#    picture: "daniilbel/pic-backend:1.0.0"
 #    build:
 #      context: .
 #      dockerfile: Dockerfile
