@@ -1,17 +1,17 @@
 version: '3.8'
 services:
-  client-backend:
-    image: "daniilbel/pic-backend:1.0.0"
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
-    environment:
-      - SERVER_PORT=8080
-      - SPRING_DATABASE_URL=jdbc:postgresql://postgres:5432/pic_db
+#  client-backend:
+#    image: "daniilbel/pic-backend:1.0.0"
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - postgres
+#    environment:
+#      - SERVER_PORT=8080
+#      - SPRING_DATABASE_URL=jdbc:postgresql://postgres:5432/pic_db
 
   postgres:
     image: "postgres"
