@@ -5,27 +5,9 @@ CREATE TABLE IF NOT EXISTS users
     username VARCHAR(255) NOT NULL unique
 );
 
-CREATE TABLE IF NOT EXISTS tasks
+CREATE TABLE IF NOT EXISTS users_images
 (
-    id              BIGSERIAL PRIMARY KEY,
-    title           VARCHAR(255) NOT NULL,
-    description     VARCHAR(255) NULL,
-    status          VARCHAR(255) NOT NULL,
-    expiration_date TIMESTAMP    NULL
-);
-
-CREATE TABLE IF NOT EXISTS users_tasks
-(
-    user_id BIGINT NOT NULL,
-    task_id BIGINT NOT NULL,
-    PRIMARY KEY (user_id, task_id),
-    CONSTRAINT fk_users_tasks_users FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE NO ACTION,
-    CONSTRAINT fk_users_tasks_tasks FOREIGN KEY (task_id) REFERENCES tasks (id) ON DELETE CASCADE ON UPDATE NO ACTION
-);
-
-CREATE TABLE IF NOT EXISTS tasks_images
-(
-    task_id BIGINT       NOT NULL,
+    user_id BIGINT       NOT NULL,
     image   VARCHAR(255) NOT NULL,
-    CONSTRAINT fk_tasks_images_tasks FOREIGN KEY (task_id) REFERENCES tasks (id) ON DELETE CASCADE ON UPDATE NO ACTION
+    CONSTRAINT fk_users_images_users FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE NO ACTION
 );

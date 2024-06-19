@@ -1,7 +1,7 @@
-package org.project.demo_picture_service;
+package org.project.demo_picture_service.web.controller;
 
-import org.project.demo_picture_service.model.Author;
-import org.project.demo_picture_service.model.Picture;
+import org.project.demo_picture_service.domain.Author;
+import org.project.demo_picture_service.domain.Picture;
 import org.project.demo_picture_service.repository.AuthorRepository;
 import org.project.demo_picture_service.repository.PictureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +11,14 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.Optional;
-import java.util.logging.Logger;
 
 @Controller
-public class AuthorController {
+public class UserController {
     private final AuthorRepository authorRepository;
     private final PictureRepository pictureRepository;
 
-//    private static final Logger logger = Logger.getLogger(AuthorController.class.getName());
-
     @Autowired
-    public AuthorController(AuthorRepository authorRepository, PictureRepository pictureRepository) {
+    public UserController(AuthorRepository authorRepository, PictureRepository pictureRepository) {
         this.authorRepository = authorRepository;
         this.pictureRepository = pictureRepository;
     }

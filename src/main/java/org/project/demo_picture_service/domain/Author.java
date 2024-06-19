@@ -1,4 +1,4 @@
-package org.project.demo_picture_service.model;
+package org.project.demo_picture_service.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
