@@ -11,9 +11,9 @@ spring:
       password: ${REDIS_PASSWORD}
     mongodb:
       authentication-database: admin
-      username: rootuser
-      password: rootpass
-      database: mongo-db
+      username: ${MONGODB_USERNAME}
+      password: ${MONGODB_PASSWORD}
+      database: ${MONGODB_DATABASE}
       port: 27017
       host: localhost
   datasource:
