@@ -7,7 +7,7 @@ type Query {
 type Mutation {
     updateUser(dto: InputUser): User!
     deleteUserById(id: ID!): Boolean
-    createPicture(id: ID!, dto: InputPicture!): Picture!
+    createPicture(id: ID!, dto: InputPicture): Picture!
     updatePicture(dto: InputPicture): Picture!
     deletePicture(id: ID!): Boolean
 }

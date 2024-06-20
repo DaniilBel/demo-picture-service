@@ -7,6 +7,9 @@ import org.project.demo_picture_service.domain.picture.PictureImage;
 import org.project.demo_picture_service.repository.PictureRepository;
 import org.project.demo_picture_service.service.ImageService;
 import org.project.demo_picture_service.service.PictureService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +24,10 @@ public class PictureServiceImpl implements PictureService {
     private final ImageService imageService;
 
     @Override
+    @Cacheable(
+            value = "PictureService::getById",
+            key = "#id"
+    )
     public Picture getById(final Long id) {
         return pictureRepository.findById(id)
                 .orElseThrow(() ->
@@ -34,6 +41,10 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     @Transactional
+    @CachePut(
+            value = "PictureService::getByID",
+            key = "#task.id"
+    )
     public Picture update(final Picture picture) {
         Picture existing = getById(picture.getId());
         existing.setTitle(picture.getTitle());
@@ -43,6 +54,12 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
+    @Transactional
+    @Cacheable(
+            value = "PictureService::getById",
+            condition = "#task.id!=null",
+            key = "#task.id"
+    )
     public Picture create(
             final Picture picture,
             final Long userId
@@ -54,12 +71,20 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     @Transactional
+    @CacheEvict(
+            value = "PictureService::getByID",
+            key = "#id"
+    )
     public void delete(final Long id) {
         pictureRepository.deleteById(id);
     }
 
     @Override
     @Transactional
+    @CacheEvict(
+            value = "PictureService::getByID",
+            key = "#id"
+    )
     public void uploadImage(
             final Long id,
             final PictureImage image
