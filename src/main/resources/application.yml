@@ -9,6 +9,13 @@ spring:
       host: ${REDIS_HOST}
       port: 6379
       password: ${REDIS_PASSWORD}
+    mongodb:
+      authentication-database: admin
+      username: rootuser
+      password: rootpass
+      database: mongo-db
+      port: 27017
+      host: localhost
   datasource:
     url: jdbc:postgresql://${HOST}:5432/${POSTGRES_DATABASE}?currentSchema=${POSTGRES_SCHEMA}
     username: ${POSTGRES_USERNAME}

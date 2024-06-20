@@ -1,4 +1,8 @@
-version: '3'
+version: '3.8'
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   cache:
@@ -8,6 +12,7 @@ volumes:
   minio-data:
     driver: local
   pgadmin-data:
+  data: {}
 
 services:
 #  client-backend:
@@ -27,6 +32,8 @@ services:
     build:
       context: .
     container_name: pic-backend
+    networks:
+      - app-network
     depends_on:
       - db
       - minio
@@ -34,27 +41,57 @@ services:
     env_file:
       - .env
     ports:
-      - '8080:8080'
+      - "8080:8080"
 
   db:
     image: "postgres"
     container_name: "postgres"
+    networks:
+      - app-network
     environment:
       POSTGRES_USER: "${POSTGRES_USERNAME}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_DB: "${POSTGRES_DATABASE}"
 #      PGDATA: "/var/lib/postgresql/data/db-data"
     ports:
-      - '5432'
+      - "5432"
     volumes:
       - ./src/main/resources/preliquibase:/docker-entrypoint-initdb.d
       - db-data:/var/lib/postgresql/data
 #    restart: unless-stopped
 
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    networks:
+      - app-network
+    ports:
+      - "27017:27017"
+    volumes:
+      - data:/data
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=rootuser
+      - MONGO_INITDB_ROOT_PASSWORD=rootpass
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    networks:
+      - app-network
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=rootuser
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=rootpass
+      - ME_CONFIG_MONGODB_SERVER=mongodbrootuser
+
   redis:
     image: redis:7.2-rc-alpine
     restart: always
     container_name: redis
+    networks:
+      - app-network
     ports:
       - '6379:6379'
     command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
@@ -64,6 +101,8 @@ services:
   minio:
     image: minio/minio:latest
     container_name: minio
+    networks:
+      - app-network
     environment:
       - MINIO_ROOT_USER=${MINIO_ACCESS_KEY}
       - MINIO_ROOT_PASSWORD=${MINIO_SECRET_KEY}
