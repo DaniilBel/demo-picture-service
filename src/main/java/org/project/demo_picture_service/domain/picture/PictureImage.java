@@ -1,9 +1,11 @@
 package org.project.demo_picture_service.domain.picture;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
-@Data
+@Getter
+@Setter
 public class PictureImage {
 
     private MultipartFile file;

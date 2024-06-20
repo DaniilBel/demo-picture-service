@@ -9,14 +9,16 @@ import jakarta.persistence.Column;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.FetchType;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "pictures")
-@Data
+@Getter
+@Setter
 public class Picture implements Serializable {
 
     @Id
