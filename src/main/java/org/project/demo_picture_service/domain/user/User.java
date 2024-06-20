@@ -12,15 +12,16 @@ import jakarta.persistence.JoinColumn;
 import lombok.Data;
 import org.project.demo_picture_service.domain.picture.Picture;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
 @Data
-public class User {
+public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

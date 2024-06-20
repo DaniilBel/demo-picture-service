@@ -3,6 +3,9 @@ POSTGRES_USERNAME=username
 POSTGRES_PASSWORD=password
 POSTGRES_SCHEMA=schema
 
+REDIS_HOST=localhost
+REDIS_PASSWORD=password
+
 MINIO_BUCKET=bucket_store
 MINIO_URL=localhost:9000
 MINIO_ACCESS_KEY=minioadmin

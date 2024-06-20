@@ -11,15 +11,16 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.FetchType;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "pictures")
 @Data
-public class Picture {
+public class Picture implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
