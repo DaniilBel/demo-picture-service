@@ -13,3 +13,9 @@ spring:
   graphql:
     graphiql:
       enabled: true
+
+minio:
+  bucket: ${MINIO_BUCKET}
+  url: ${MINIO_URL}
+  access-key: ${MINIO_ACCESS_KEY}
+  secret-key: ${MINIO_SECRETKEY}

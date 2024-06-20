@@ -9,16 +9,14 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.project.demo_picture_service.domain.picture.Picture;
 
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
+@Data
 public class User {
 
     @Id

@@ -5,6 +5,7 @@ import org.project.demo_picture_service.domain.exception.ResourceNotFoundExcepti
 import org.project.demo_picture_service.domain.picture.Picture;
 import org.project.demo_picture_service.domain.picture.PictureImage;
 import org.project.demo_picture_service.repository.PictureRepository;
+import org.project.demo_picture_service.service.ImageService;
 import org.project.demo_picture_service.service.PictureService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import java.util.List;
 public class PictureServiceImpl implements PictureService {
 
     private final PictureRepository pictureRepository;
+    private final ImageService imageService;
 
     @Override
     public Picture getById(final Long id) {
@@ -62,6 +64,7 @@ public class PictureServiceImpl implements PictureService {
             final Long id,
             final PictureImage image
     ) {
-
+        String filename = imageService.upload(image);
+        pictureRepository.addImage(id, filename);
     }
 }
