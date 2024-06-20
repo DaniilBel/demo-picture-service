@@ -1,20 +1,13 @@
 package org.project.demo_picture_service.domain.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.project.demo_picture_service.domain.picture.Picture;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -28,6 +21,16 @@ public class User implements Serializable {
 
     private String name;
     private String username;
+    private String password;
+
+    @Transient
+    private String passwordConfirmation;
+
+    @Column(name = "role")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "users_roles")
+    @Enumerated(value = EnumType.STRING)
+    private Set<Role> roles;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(inverseJoinColumns = @JoinColumn(name = "picture_id"))

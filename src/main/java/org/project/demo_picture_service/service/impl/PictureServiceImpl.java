@@ -43,7 +43,7 @@ public class PictureServiceImpl implements PictureService {
     @Transactional
     @CachePut(
             value = "PictureService::getByID",
-            key = "#task.id"
+            key = "#picture.id"
     )
     public Picture update(final Picture picture) {
         Picture existing = getById(picture.getId());
@@ -57,8 +57,8 @@ public class PictureServiceImpl implements PictureService {
     @Transactional
     @Cacheable(
             value = "PictureService::getById",
-            condition = "#task.id!=null",
-            key = "#task.id"
+            condition = "#picture.id!=null",
+            key = "#picture.id"
     )
     public Picture create(
             final Picture picture,

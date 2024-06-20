@@ -1,5 +1,6 @@
 package org.project.demo_picture_service.web.dto.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -25,4 +26,14 @@ public class UserDto {
             message = "Username length must be smaller than 255 sym",
             groups = {OnCreate.class, OnUpdate.class})
     private String username;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @NotNull(message = "Password must be not null",
+            groups = {OnCreate.class, OnUpdate.class})
+    private String password;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @NotNull(message = "Password confirmation must be not null",
+            groups = {OnCreate.class})
+    private String passwordConfirmation;
 }

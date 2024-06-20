@@ -2,6 +2,8 @@ package org.project.demo_picture_service.repository;
 
 import org.project.demo_picture_service.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -11,4 +13,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
             String username
     );
 
+    @Query(value = """
+            SELECT exists(
+                               SELECT 1
+                               FROM users_pictures
+                               WHERE user_id = :userId
+                                 AND picture_id = :pictureId)
+                """, nativeQuery = true)
+    boolean isPictureOwner(
+            @Param("userId") Long userId,
+            @Param("pictureId") Long pictureId
+    );
 }

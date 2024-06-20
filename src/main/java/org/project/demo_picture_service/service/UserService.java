@@ -20,6 +20,11 @@ public interface UserService {
             User user
     );
 
+    boolean isPictureOwner(
+            Long userId,
+            Long pictureId
+    );
+
     void delete(
             Long id
     );

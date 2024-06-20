@@ -13,6 +13,7 @@ import org.project.demo_picture_service.web.mappers.UserMapper;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,7 @@ public class UserController {
 
     @PutMapping
     @MutationMapping(name = "updateUser")
+    @PreAuthorize("@customSecurityExpression.canAccessUser(#dto.id)")
     public UserDto update(
             @Validated(OnCreate.class)
             @RequestBody @Argument final UserDto dto
@@ -49,6 +51,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     @QueryMapping(name = "userById")
+    @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
     public UserDto getById(@PathVariable @Argument final Long id) {
         User user = userService.getById(id);
         return userMapper.toDto(user);
@@ -56,12 +59,14 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @MutationMapping(name = "deleteUserById")
+    @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
     public void deleteById(@PathVariable @Argument final Long id) {
         userService.delete(id);
     }
 
     @GetMapping("/{id}/pictures")
     @QueryMapping(name = "picturesByUserId")
+    @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
     public List<PictureDto> getPicturesByUserId(@PathVariable @Argument final Long id) {
         List<Picture> pictures = pictureService.getAllByUserId(id);
         return pictureMapper.toDto(pictures);
@@ -69,6 +74,7 @@ public class UserController {
 
     @PostMapping("/{id}/pictures")
     @MutationMapping(name = "createPicture")
+    @PreAuthorize("@customSecurityExpression.canAccessUser(#id)")
     public PictureDto createPicture(
             @PathVariable @Argument final Long id,
             @Validated(OnCreate.class)

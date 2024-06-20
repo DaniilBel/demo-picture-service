@@ -6,6 +6,8 @@ POSTGRES_SCHEMA=schema
 REDIS_HOST=localhost
 REDIS_PASSWORD=password
 
+JWT_SECRET=base64encode
+
 MINIO_BUCKET=bucket_store
 MINIO_URL=localhost:9000
 MINIO_ACCESS_KEY=minioadmin
