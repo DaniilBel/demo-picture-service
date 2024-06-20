@@ -5,7 +5,6 @@ import org.project.demo_picture_service.domain.exception.ResourceNotFoundExcepti
 import org.project.demo_picture_service.domain.picture.Picture;
 import org.project.demo_picture_service.domain.picture.PictureImage;
 import org.project.demo_picture_service.repository.PictureRepository;
-import org.project.demo_picture_service.service.ImageService;
 import org.project.demo_picture_service.service.PictureService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,20 +19,20 @@ public class PictureServiceImpl implements PictureService {
     private final PictureRepository pictureRepository;
 
     @Override
-    public Picture getById(Long id) {
+    public Picture getById(final Long id) {
         return pictureRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Picture not found with id " + id));
     }
 
     @Override
-    public List<Picture> getAllByUserId(Long id) {
+    public List<Picture> getAllByUserId(final Long id) {
         return pictureRepository.findAllByUserId(id);
     }
 
     @Override
     @Transactional
-    public Picture update(Picture picture) {
+    public Picture update(final Picture picture) {
         Picture existing = getById(picture.getId());
         existing.setTitle(picture.getTitle());
         existing.setDescription(picture.getDescription());
@@ -42,7 +41,10 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
-    public Picture create(Picture picture, Long userId) {
+    public Picture create(
+            final Picture picture,
+            final Long userId
+    ) {
         pictureRepository.save(picture);
         pictureRepository.assignPicture(userId, picture.getId());
         return picture;
@@ -50,13 +52,16 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(final Long id) {
         pictureRepository.deleteById(id);
     }
 
     @Override
     @Transactional
-    public void uploadImage(Long id, PictureImage image) {
+    public void uploadImage(
+            final Long id,
+            final PictureImage image
+    ) {
 
     }
 }

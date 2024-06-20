@@ -2,16 +2,20 @@ package org.project.demo_picture_service.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.project.demo_picture_service.domain.picture.Picture;
-import org.project.demo_picture_service.domain.picture.PictureImage;
 import org.project.demo_picture_service.service.PictureService;
 import org.project.demo_picture_service.web.dto.picture.PictureDto;
-import org.project.demo_picture_service.web.dto.picture.PictureImageDto;
 import org.project.demo_picture_service.web.dto.validation.OnUpdate;
 import org.project.demo_picture_service.web.mappers.PictureImageMapper;
 import org.project.demo_picture_service.web.mappers.PictureMapper;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
 @RequestMapping("/api/v1/pictures")
