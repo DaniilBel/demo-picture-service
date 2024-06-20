@@ -44,7 +44,7 @@ public class PictureServiceImpl implements PictureService {
     @Override
     public Picture create(Picture picture, Long userId) {
         pictureRepository.save(picture);
-        pictureRepository.assignTask(userId, picture.getId());
+        pictureRepository.assignPicture(userId, picture.getId());
         return picture;
     }
 

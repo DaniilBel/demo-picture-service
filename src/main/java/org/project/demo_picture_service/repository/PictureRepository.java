@@ -24,8 +24,18 @@ public interface PictureRepository extends JpaRepository<Picture, Long> {
             INSERT INTO users_pictures (user_id, picture_id)
             VALUES (:userId, :pictureId)
             """, nativeQuery = true)
-    void assignTask(
+    void assignPicture(
             @Param("userId") Long userId,
             @Param("pictureId") Long pictureId
+    );
+
+    @Modifying
+    @Query(value = """
+            INSERT INTO pictures_images (picture_id, image)
+            VALUES (:id, :fileName)
+            """, nativeQuery = true)
+    void addImage(
+            @Param("id") Long id,
+            @Param("fileName") String fileName
     );
 }

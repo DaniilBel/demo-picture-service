@@ -30,7 +30,7 @@ public class User {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(inverseJoinColumns = @JoinColumn(name = "picture_id"))
-    private List<Picture> images;
+    private List<Picture> pictures;
 
     @Override
     public String toString() {
