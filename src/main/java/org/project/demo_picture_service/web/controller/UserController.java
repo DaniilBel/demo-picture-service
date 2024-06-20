@@ -10,6 +10,9 @@ import org.project.demo_picture_service.web.dto.user.UserDto;
 import org.project.demo_picture_service.web.dto.validation.OnCreate;
 import org.project.demo_picture_service.web.mappers.PictureMapper;
 import org.project.demo_picture_service.web.mappers.UserMapper;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,37 +37,42 @@ public class UserController {
     private final PictureMapper pictureMapper;
 
     @PutMapping
+    @MutationMapping(name = "updateUser")
     public UserDto update(
             @Validated(OnCreate.class)
-            @RequestBody final UserDto userDto
+            @RequestBody @Argument final UserDto dto
     ) {
-        User user = userMapper.toEntity(userDto);
+        User user = userMapper.toEntity(dto);
         User updatedUser = userService.update(user);
         return userMapper.toDto(updatedUser);
     }
 
     @GetMapping("/{id}")
-    public UserDto getById(@PathVariable final Long id) {
+    @QueryMapping(name = "userById")
+    public UserDto getById(@PathVariable @Argument final Long id) {
         User user = userService.getById(id);
         return userMapper.toDto(user);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable final Long id) {
+    @MutationMapping(name = "deleteUserById")
+    public void deleteById(@PathVariable @Argument final Long id) {
         userService.delete(id);
     }
 
     @GetMapping("/{id}/pictures")
-    public List<PictureDto> getPicturesByUserId(@PathVariable final Long id) {
+    @QueryMapping(name = "picturesByUserId")
+    public List<PictureDto> getPicturesByUserId(@PathVariable @Argument final Long id) {
         List<Picture> pictures = pictureService.getAllByUserId(id);
         return pictureMapper.toDto(pictures);
     }
 
     @PostMapping("/{id}/pictures")
+    @MutationMapping(name = "createPicture")
     public PictureDto createPicture(
-            @PathVariable final Long id,
+            @PathVariable @Argument final Long id,
             @Validated(OnCreate.class)
-            @RequestBody final PictureDto dto
+            @RequestBody @Argument final PictureDto dto
     ) {
         Picture picture = pictureMapper.toEntity(dto);
         Picture createdPicture = pictureService.create(picture, id);

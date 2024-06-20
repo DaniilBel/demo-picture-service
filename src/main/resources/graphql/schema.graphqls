@@ -1,22 +1,13 @@
 type Query {
-    authors: [Author]
-    authorById(id: ID!): Author
+    userById(id: ID!): User
+    picturesByUserId(id: ID!): [Picture]
+    pictureById(id: ID!): Picture
 }
 
 type Mutation {
-    addAuthor(name: String!): Author
-    addPicture(title: String!, size: Int, url: String!, authorId: ID!): Picture!
-}
-
-type Author {
-    id: ID!
-    name: String!
-    pictures: [Picture]
-}
-
-type Picture {
-    id: ID!
-    title: String!
-    size: Int
-    url: String!
+    updateUser(dto: InputUser): User!
+    deleteUserById(id: ID!): Boolean
+    createPicture(id: ID!, dto: InputPicture!): Picture!
+    updatePicture(dto: InputPicture): Picture!
+    deletePicture(id: ID!): Boolean
 }
